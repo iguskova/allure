@@ -1,15 +1,23 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id "io.qameta.allure" version "2.8.1"
 }
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
 
 repositories {
     mavenCentral()
 }
-
 allure {
     version = "2.15.0"
     autoconfigure = true
+    configuration = "testImplementation"
 
     useJUnit5 {
         version = "2.15.0"
@@ -18,14 +26,21 @@ allure {
 
 dependencies {
     testImplementation(
-            'org.junit.jupiter:junit-jupiter-api:5.7.2',
-            'org.junit.jupiter:junit-jupiter-params:5.7.2',
+            'org.aspectj:aspectjweaver:1.9.6',
+            'org.junit.jupiter:junit-jupiter-api:5.8.1',
+            'org.junit.jupiter:junit-jupiter-params:5.8.1',
             'io.qameta.allure:allure-selenide:2.15.0',
-            'com.codeborne:selenide:5.22.3'
+            'com.codeborne:selenide:5.24.4'
     )
-    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.7.2')
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.1')
 }
 
 test {
     useJUnitPlatform()
+}
+
+configurations {
+    testCompile {
+        extendsFrom testImplementation
+    }
 }
